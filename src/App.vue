@@ -1,7 +1,15 @@
-<script setup></script>
-
 <template>
-  <div class="mt-16 text-center text-9xl">KIRILL</div>
+  <MainNav />
 </template>
+<script>
+import MainNav from '@/components/MainNav.vue'
+
+export default {
+  name: 'App',
+  components: {
+    MainNav
+  }
+}
+</script>
 
 <style scoped></style>
