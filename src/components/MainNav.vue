@@ -11,18 +11,34 @@
             </li>
           </ul>
         </nav>
+        <div class="ml-auto flex h-full items-center">
+          <profile-image v-if="isLoggedIn" />
+          <action-button v-else text="Sign in" type="primary" @click="loginUser" />
+        </div>
       </div>
     </div>
   </header>
 </template>
 
 <script>
+import ActionButton from '@/components/ActionButton.vue'
+import ProfileImage from '@/components/ProfileImage.vue'
 export default {
   name: 'MainNav',
+  components: {
+    ActionButton,
+    ProfileImage
+  },
   data() {
     return {
       company: 'Lexicon Careers',
-      menuItems: ['Teams', 'Locations', 'Life at Lexicon', 'How we hire', 'Students', 'Jobs']
+      menuItems: ['Teams', 'Locations', 'Life at Lexicon', 'How we hire', 'Students', 'Jobs'],
+      isLoggedIn: false
+    }
+  },
+  methods: {
+    loginUser() {
+      this.isLoggedIn = true
     }
   }
 }

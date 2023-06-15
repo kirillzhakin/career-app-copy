@@ -2,6 +2,7 @@ main
 git checkout develop
 git checkout feat/1-create-nav-comp
 git checkout feat/2-add-test
+git checkout feat/3-add-components
 
 git add -A
 git commit -m ""

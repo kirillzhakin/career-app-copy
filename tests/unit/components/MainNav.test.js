@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/vue'
+import userEvent from '@testing-library/user-event'
 
 import MainNav from '@/components/MainNav.vue'
 
@@ -21,5 +22,24 @@ describe('MainNav', () => {
       'Students',
       'Jobs'
     ])
+  })
+  describe('Аутентификация пользователя', () => {
+    it('Отображение аватара пользователя', async () => {
+      render(MainNav)
+      let profileImage = screen.queryByRole('img', {
+        name: /avatar/i
+      })
+      expect(profileImage).not.toBeInTheDocument()
+
+      const loginButton = screen.getByRole('button', {
+        name: /sign in/i
+      })
+      await userEvent.click(loginButton)
+
+      profileImage = screen.getByRole('img', {
+        name: /avatar/i
+      })
+      expect(profileImage).toBeInTheDocument()
+    })
   })
 })
