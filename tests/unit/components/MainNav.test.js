@@ -39,7 +39,7 @@ describe('MainNav', () => {
       renderMainNav()
 
       let profileImage = screen.queryByRole('img', {
-        name: /avatar/i
+        name: /user image/i
       })
       expect(profileImage).not.toBeInTheDocument()
 
@@ -48,10 +48,10 @@ describe('MainNav', () => {
       })
       await userEvent.click(loginButton)
 
-      // profileImage = screen.getByRole('img', {
-      //   name: /avatar/i
-      // })
-      // expect(profileImage).toBeInTheDocument()
+      //   profileImage = screen.getByRole('img', {
+      //     name: /^user image$/i
+      //   })
+      //   expect(profileImage).toBeInTheDocument()
     })
   })
 })
