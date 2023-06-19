@@ -4,14 +4,25 @@ import userEvent from '@testing-library/user-event'
 import MainNav from '@/components/MainNav.vue'
 
 describe('MainNav', () => {
+  const renderMainNav = () => {
+    render(MainNav, {
+      global: {
+        stubs: {
+          FontAwesomeIcon: true
+        }
+      }
+    })
+  }
+
   it('Отобразить название', () => {
-    render(MainNav)
+    renderMainNav()
     const companyName = screen.getByText('Lexicon Careers')
     expect(companyName).toBeInTheDocument()
   })
 
   it('Отобразить меню навигации', () => {
-    render(MainNav)
+    renderMainNav()
+
     const navigationMenuItems = screen.getAllByRole('listitem')
     const navigationMenuText = navigationMenuItems.map(item => item.textContent)
     expect(navigationMenuText).toEqual([
@@ -25,7 +36,8 @@ describe('MainNav', () => {
   })
   describe('Аутентификация пользователя', () => {
     it('Отображение аватара пользователя', async () => {
-      render(MainNav)
+      renderMainNav()
+
       let profileImage = screen.queryByRole('img', {
         name: /avatar/i
       })
