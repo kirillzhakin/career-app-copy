@@ -1,5 +1,5 @@
 <template>
-  <header class="w-full text-sm">
+  <header :class="['w-full', 'text-sm', headerHeightClass]">
     <div class="fixed left-0 top-0 h-16 w-full bg-white">
       <div class="mx-auto flex h-full flex-nowrap border-b border-solid border-brand-gray-1 px-8">
         <a href="/" class="flex h-full items-center text-xl">{{ company }}</a>
@@ -16,7 +16,7 @@
           <action-button v-else text="Sign in" @click="loginUser" />
         </div>
       </div>
-      <the-subnav v-if="isLoggedIn"></the-subnav>
+      <the-subnav v-if="isLoggedIn" />
     </div>
   </header>
 </template>
@@ -39,6 +39,14 @@ export default {
       isLoggedIn: false
     }
   },
+  computed: {
+    headerHeightClass() {
+      return {
+        'h-16': !this.isLoggedIn,
+        'h-32': this.isLoggedIn
+      }
+    }
+  },
   methods: {
     loginUser() {
       this.isLoggedIn = true
@@ -46,5 +54,3 @@ export default {
   }
 }
 </script>
-
-<style scoped></style>
