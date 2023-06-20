@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/vue'
 
-import TheSubnav from '@/components/TheSubnav.vue'
+import TheSubnav from '@/components/Navigation/TheSubnav.vue'
 
 describe('TheSubnav', () => {
   describe('когда пользоватуль на странице поиска работы', () => {
