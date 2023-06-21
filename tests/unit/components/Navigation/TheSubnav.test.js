@@ -3,44 +3,33 @@ import { render, screen } from '@testing-library/vue'
 import TheSubnav from '@/components/Navigation/TheSubnav.vue'
 
 describe('TheSubnav', () => {
-  describe('когда пользоватуль на странице поиска работы', () => {
-    it('отобразить счетчик вакансий', () => {
-      render(TheSubnav, {
-        global: {
-          stubs: {
-            FromAwesomIcon: true
+  const routeSubnav = routeName => {
+    render(TheSubnav, {
+      global: {
+        mocks: {
+          $route: {
+            name: routeName
           }
         },
-        data() {
-          return {
-            onJobResultsPage: true
-          }
+        stubs: {
+          FromAwesomIcon: true
         }
-      })
+      }
+    })
+  }
 
+  describe('когда пользоватуль на странице поиска работы', () => {
+    it('отобразить счетчик вакансий', () => {
+      routeSubnav('JobResults')
       const jobCount = screen.getByText('999')
-
       expect(jobCount).toBeInTheDocument()
     })
   })
 
   describe('когда пользователь не находится на странице поиска работы', () => {
     it('не отображаются вакансии', () => {
-      render(TheSubnav, {
-        global: {
-          stubs: {
-            FontAwesomeIcon: true
-          }
-        },
-        data() {
-          return {
-            onJobResultsPage: false
-          }
-        }
-      })
-
+      routeSubnav('Home')
       const jobCount = screen.queryByText('999')
-
       expect(jobCount).not.toBeInTheDocument()
     })
   })
