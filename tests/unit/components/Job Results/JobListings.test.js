@@ -30,7 +30,7 @@ describe('JobListings', () => {
     axios.get.mockResolvedValue({ data: [] })
     const $route = createRoute()
     renderJobListings($route)
-    expect(axios.get).toHaveBeenCalledWith('http://localhost:3000/jobs')
+    expect(axios.get).toHaveBeenCalledWith('http://lexicon-career.ru/jobs')
   })
 
   it('отобразить 10 вакансий', async () => {
