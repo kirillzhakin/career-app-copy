@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
+import { useRouter } from 'vue-router'
+vi.mock('vue-router')
 
 import JobsearchForm from '@/components/JobSearch/JobsearchForm.vue'
 
@@ -7,13 +9,10 @@ describe('JobSearchForm', () => {
   describe('когда пользователь отправляет данные формы', () => {
     it('направляет пользователя на страницу результатов поиска с параметрами поиска пользователя', async () => {
       const push = vi.fn()
-      const $router = { push }
+      useRouter.mockReturnValue({ push })
 
       render(JobsearchForm, {
         global: {
-          mocks: {
-            $router
-          },
           stubs: {
             FormAwesomeIcon: true
           }
