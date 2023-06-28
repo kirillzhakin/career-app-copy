@@ -47,39 +47,58 @@ describe('getters', () => {
     })
   })
 
-  describe('FILTERED_JOBS_BY_ORGANIZATIONS', () => {
-    it('фильтрует вакансии по выбору', () => {
+  describe('UNIQUE_JOB_TYPES', () => {
+    it('находит уникальные значения формата работы в списке вакансий', () => {
       const jobStore = useJobsStore()
-      jobStore.jobs = [
-        { organization: 'Ozon' },
-        { organization: 'Yandex' },
-        { organization: 'Mail' }
-      ]
-
-      const userStore = useUserStore()
-      userStore.selectedOrganizations = ['Ozon', 'Mail']
-      const result = jobStore.FILTERED_JOBS_BY_ORGANIZATIONS
-      expect(result).toEqual([{ organization: 'Ozon' }, { organization: 'Mail' }])
+      jobStore.jobs = [{ jobType: 'Full-time' }, { jobType: 'Temporary' }, { jobType: 'Full-time' }]
+      const result = jobStore.UNIQUE_JOB_TYPES
+      expect(result).toEqual(new Set(['Full-time', 'Temporary']))
     })
+  })
 
-    describe('когда пользователь не выбрал организации', () => {
-      it('вернуть все вакансии', () => {
-        const jobStore = useJobsStore()
-        jobStore.jobs = [
-          { organization: 'Ozon' },
-          { organization: 'Yandex' },
-          { organization: 'Mail' }
-        ]
-
+  describe('INCLUDE_JOB_BY_ORGANIZTION', () => {
+    describe('пользователь не выбрал организацию', () => {
+      it('сравнивает вакансии', () => {
         const userStore = useUserStore()
         userStore.selectedOrganizations = []
-        const result = jobStore.FILTERED_JOBS_BY_ORGANIZATIONS
-        expect(result).toEqual([
-          { organization: 'Ozon' },
-          { organization: 'Yandex' },
-          { organization: 'Mail' }
-        ])
+        const jobStore = useJobsStore()
+        const job = { organization: 'Yandex' }
+
+        const result = jobStore.INCLUDE_JOB_BY_ORGANIZTION(job)
+        expect(result).toBe(true)
       })
+    })
+    it('фильтрует вакансии в соответствии с выбором пользователя', () => {
+      const userStore = useUserStore()
+      userStore.selectedOrganizations = ['Ozon', 'Yandex']
+      const jobStore = useJobsStore()
+      const job = { organization: 'Yandex' }
+
+      const result = jobStore.INCLUDE_JOB_BY_ORGANIZTION(job)
+      expect(result).toBe(true)
+    })
+  })
+
+  describe('INCLUDE_JOB_BY_JOB_TYPE', () => {
+    describe('пользователь не выбрал формат работы', () => {
+      it('сравнивает вакансии', () => {
+        const userStore = useUserStore()
+        userStore.selectedJobTypes = []
+        const jobStore = useJobsStore()
+        const job = { jobType: 'Full-time' }
+
+        const result = jobStore.INCLUDE_JOB_BY_JOB_TYPE(job)
+        expect(result).toBe(true)
+      })
+    })
+    it('фильтрует вакансии в соответствии с выбором пользователя', () => {
+      const userStore = useUserStore()
+      userStore.selectedJobTypes = ['Full-time', 'Path-time']
+      const jobStore = useJobsStore()
+      const job = { jobType: 'Path-time' }
+
+      const result = jobStore.INCLUDE_JOB_BY_JOB_TYPE(job)
+      expect(result).toBe(true)
     })
   })
 })

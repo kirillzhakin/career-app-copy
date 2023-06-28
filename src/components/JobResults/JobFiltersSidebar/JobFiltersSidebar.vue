@@ -8,9 +8,8 @@
         </div>
       </div>
       <collapsible-accordion header="Deagree"> </collapsible-accordion>
-      <collapsible-accordion header="Name">
-        <p>Kirill</p>
-      </collapsible-accordion>
+
+      <job-filters-sidebar-job-types></job-filters-sidebar-job-types>
       <job-filters-sidebar-organizations></job-filters-sidebar-organizations>
     </section>
   </div>
@@ -19,13 +18,15 @@
 <script>
 import ActionButton from '@/components/Shared/ActionButton.vue'
 import CollapsibleAccordion from '@/components/Shared/CollapsibleAccordion.vue'
+import JobFiltersSidebarJobTypes from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarJobTypes.vue'
 import JobFiltersSidebarOrganizations from '@/components/JobResults/JobFiltersSidebar/JobFiltersSidebarOrganizations.vue'
 export default {
   name: 'JobFiltersSidebar',
   components: {
     ActionButton,
     CollapsibleAccordion,
-    JobFiltersSidebarOrganizations
+    JobFiltersSidebarOrganizations,
+    JobFiltersSidebarJobTypes
   }
 }
 </script>
