@@ -3,8 +3,14 @@ import { defineStore } from 'pinia'
 export const ADD_SELECTED_ORGANIZATIONS = 'ADD_SELECTED_ORGANIZATIONS'
 export const ADD_SELECTED_JOB_TYPES = 'ADD_SELECTED_JOB_TYPES'
 
+export interface UserStore {
+  isLoggedIn: boolean
+  selectedOrganizations: string[]
+  selectedJobTypes: string[]
+}
+
 export const useUserStore = defineStore('user', {
-  state: () => ({
+  state: (): UserStore => ({
     isLoggedIn: false,
     selectedOrganizations: [],
     selectedJobTypes: []
@@ -13,11 +19,10 @@ export const useUserStore = defineStore('user', {
     loginUser() {
       this.isLoggedIn = true
     },
-    [ADD_SELECTED_ORGANIZATIONS](organizations) {
+    [ADD_SELECTED_ORGANIZATIONS](organizations: string[]) {
       this.selectedOrganizations = organizations
     },
-    [ADD_SELECTED_JOB_TYPES](jobTypes) {
-      console.log(jobTypes)
+    [ADD_SELECTED_JOB_TYPES](jobTypes: string[]) {
       this.selectedJobTypes = jobTypes
     }
   }

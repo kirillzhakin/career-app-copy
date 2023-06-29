@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 vi.mock('vue-router')
 
 import TheSubnav from '@/components/Navigation/TheSubnav.vue'
-import { useJobsStore } from '@/stores/jobs.js'
+import { useJobsStore } from '@/stores/jobs'
 
 describe('TheSubnav', () => {
   const renderTheSubnav = () => {

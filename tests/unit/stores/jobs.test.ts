@@ -1,10 +1,12 @@
 import { createPinia, setActivePinia } from 'pinia'
 import axios from 'axios'
-
-import { useJobsStore } from '@/stores/jobs.js'
-import { useUserStore } from '@/stores/user.js'
+import type { Mock } from 'vitest'
+import type { Job } from '@/api/types'
+import { useJobsStore } from '@/stores/jobs'
+import { useUserStore } from '@/stores/user'
 
 vi.mock('axios')
+const axiosGetMock = axios.get as Mock
 
 describe('state', () => {
   beforeEach(() => {
@@ -22,7 +24,7 @@ describe('actions', () => {
   })
   describe('FETCH_JOBS', () => {
     it('делаем запрос на сервер и записываем данные в store', async () => {
-      axios.get.mockResolvedValue({ data: ['job 1', 'job 2'] })
+      axiosGetMock.mockResolvedValue({ data: ['job 1', 'job 2'] })
       const store = useJobsStore()
       await store.FETCH_JOBS()
       expect(store.jobs).toEqual(['job 1', 'job 2'])
@@ -30,6 +32,20 @@ describe('actions', () => {
   })
 })
 describe('getters', () => {
+  const createJob = (job: Partial<Job> = {}): Job => ({
+    id: 1,
+    title: 'Angular Developer',
+    organization: 'Vue and Me',
+    degree: "Master's",
+    jobType: 'Intern',
+    locations: ['Lisbon'],
+    minimumQualifications: ['Mesh granular deliverables'],
+    preferredQualifications: ['Mesh wireless metrics'],
+    description: ['Away someone forget effect wait land.'],
+    dateAdded: '2021-07-04',
+    ...job
+  })
+
   beforeEach(() => {
     setActivePinia(createPinia())
   })
@@ -38,9 +54,9 @@ describe('getters', () => {
     it('находит уникальлное название организации в списке вакансий', () => {
       const jobStore = useJobsStore()
       jobStore.jobs = [
-        { organization: 'Ozon' },
-        { organization: 'Yandex' },
-        { organization: 'Ozon' }
+        createJob({ organization: 'Ozon' }),
+        createJob({ organization: 'Yandex' }),
+        createJob({ organization: 'Ozon' })
       ]
       const result = jobStore.UNIQUE_ORGANIZATIONS
       expect(result).toEqual(new Set(['Ozon', 'Yandex']))
@@ -50,7 +66,11 @@ describe('getters', () => {
   describe('UNIQUE_JOB_TYPES', () => {
     it('находит уникальные значения формата работы в списке вакансий', () => {
       const jobStore = useJobsStore()
-      jobStore.jobs = [{ jobType: 'Full-time' }, { jobType: 'Temporary' }, { jobType: 'Full-time' }]
+      jobStore.jobs = [
+        createJob({ jobType: 'Full-time' }),
+        createJob({ jobType: 'Temporary' }),
+        createJob({ jobType: 'Full-time' })
+      ]
       const result = jobStore.UNIQUE_JOB_TYPES
       expect(result).toEqual(new Set(['Full-time', 'Temporary']))
     })
@@ -62,7 +82,7 @@ describe('getters', () => {
         const userStore = useUserStore()
         userStore.selectedOrganizations = []
         const jobStore = useJobsStore()
-        const job = { organization: 'Yandex' }
+        const job = createJob({ organization: 'Yandex' })
 
         const result = jobStore.INCLUDE_JOB_BY_ORGANIZTION(job)
         expect(result).toBe(true)
@@ -72,7 +92,7 @@ describe('getters', () => {
       const userStore = useUserStore()
       userStore.selectedOrganizations = ['Ozon', 'Yandex']
       const jobStore = useJobsStore()
-      const job = { organization: 'Yandex' }
+      const job = createJob({ organization: 'Yandex' })
 
       const result = jobStore.INCLUDE_JOB_BY_ORGANIZTION(job)
       expect(result).toBe(true)
@@ -85,7 +105,7 @@ describe('getters', () => {
         const userStore = useUserStore()
         userStore.selectedJobTypes = []
         const jobStore = useJobsStore()
-        const job = { jobType: 'Full-time' }
+        const job = createJob({ jobType: 'Full-time' })
 
         const result = jobStore.INCLUDE_JOB_BY_JOB_TYPE(job)
         expect(result).toBe(true)
@@ -95,7 +115,7 @@ describe('getters', () => {
       const userStore = useUserStore()
       userStore.selectedJobTypes = ['Full-time', 'Path-time']
       const jobStore = useJobsStore()
-      const job = { jobType: 'Path-time' }
+      const job = createJob({ jobType: 'Path-time' })
 
       const result = jobStore.INCLUDE_JOB_BY_JOB_TYPE(job)
       expect(result).toBe(true)

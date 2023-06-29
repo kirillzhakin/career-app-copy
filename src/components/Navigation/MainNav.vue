@@ -28,7 +28,7 @@
 <script>
 import { mapActions, mapState } from 'pinia'
 
-import { useUserStore } from '@/stores/user.js'
+import { useUserStore } from '@/stores/user'
 
 import ActionButton from '@/components/Shared/ActionButton.vue'
 import ProfileImage from '@/components/Navigation/ProfileImage.vue'

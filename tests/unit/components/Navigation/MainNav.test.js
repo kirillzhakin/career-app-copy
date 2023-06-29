@@ -6,7 +6,7 @@ import { useRoute } from 'vue-router'
 vi.mock('vue-router')
 
 import MainNav from '@/components/Navigation/MainNav.vue'
-import { useUserStore } from '@/stores/user.js'
+import { useUserStore } from '@/stores/user'
 
 describe('MainNav', () => {
   const renderMainNav = () => {
