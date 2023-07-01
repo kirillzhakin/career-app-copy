@@ -5,12 +5,16 @@ import { createTestingPinia } from '@pinia/testing'
 import { useRoute } from 'vue-router'
 vi.mock('vue-router')
 
+import type { Mock } from 'vitest'
+
 import MainNav from '@/components/Navigation/MainNav.vue'
 import { useUserStore } from '@/stores/user'
 
+const useRouteMock = useRoute as Mock
+
 describe('MainNav', () => {
   const renderMainNav = () => {
-    useRoute.mockReturnValue({ name: 'Home' })
+    useRouteMock.mockReturnValue({ name: 'Home' })
 
     const pinia = createTestingPinia()
 

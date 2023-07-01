@@ -2,17 +2,11 @@ import { render, screen } from '@testing-library/vue'
 import { RouterLinkStub } from '@vue/test-utils'
 
 import JobListing from '@/components/JobResults/JobListing.vue'
+import { createJob } from 'tests/utils/createJob'
+import type { Job } from '@/api/types'
 
 describe('JobListing', () => {
-  const createJobProps = (jobProps = {}) => ({
-    title: 'Vue Developer',
-    organization: 'Yandex',
-    locations: ['Moscow'],
-    minimumQualifications: ['Code'],
-    ...jobProps
-  })
-
-  const renderJobListing = jobProps => {
+  const renderJobListing = (job: Job) => {
     render(JobListing, {
       global: {
         stubs: {
@@ -21,31 +15,31 @@ describe('JobListing', () => {
       },
       props: {
         job: {
-          ...jobProps
+          ...job
         }
       }
     })
   }
 
   it('отобразить название вакансии', () => {
-    const jobProps = createJobProps({ title: 'Vue Programmer' })
+    const jobProps = createJob({ title: 'Vue Programmer' })
     renderJobListing(jobProps)
     expect(screen.getByText('Vue Programmer')).toBeInTheDocument()
   })
 
   it('отобразить название организации', () => {
-    const jobProps = createJobProps({ organization: 'Yandex' })
+    const jobProps = createJob({ organization: 'Yandex' })
     renderJobListing(jobProps)
     expect(screen.getByText('Yandex')).toBeInTheDocument()
   })
   it('отобразить локации вакансии', () => {
-    const jobProps = createJobProps({ locations: ['Kazan', 'Minsk'] })
+    const jobProps = createJob({ locations: ['Kazan', 'Minsk'] })
     renderJobListing(jobProps)
     expect(screen.getByText('Kazan')).toBeInTheDocument()
     expect(screen.getByText('Minsk')).toBeInTheDocument()
   })
   it('отобразить тебуемую квалификацию', () => {
-    const jobProps = createJobProps({ minimumQualifications: ['Code', 'Develop'] })
+    const jobProps = createJob({ minimumQualifications: ['Code', 'Develop'] })
     renderJobListing(jobProps)
     expect(screen.getByText('Code')).toBeInTheDocument()
     expect(screen.getByText('Develop')).toBeInTheDocument()

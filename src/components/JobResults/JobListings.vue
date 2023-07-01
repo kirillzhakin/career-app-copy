@@ -31,7 +31,7 @@
   </main>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useJobsStore } from '@/stores/jobs'
@@ -45,7 +45,7 @@ onMounted(jobsStore.FETCH_JOBS)
 const FILTERED_JOBS = computed(() => jobsStore.FILTERED_JOBS)
 
 const route = useRoute()
-const currentPage = computed(() => parseInt(route.query.page || '1'))
+const currentPage = computed(() => parseInt((route.query.page as string) || '1'))
 const maxPage = computed(() => Math.ceil(FILTERED_JOBS.value.length / 10))
 
 const { previousPage, nextPage } = usePreviousAndNextPages(currentPage, maxPage)

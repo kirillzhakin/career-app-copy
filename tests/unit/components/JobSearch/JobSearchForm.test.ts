@@ -1,17 +1,20 @@
+import type { Mock } from 'vitest'
 import { render, screen } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 import { useRouter } from 'vue-router'
 vi.mock('vue-router')
 
-import JobsearchForm from '@/components/JobSearch/JobsearchForm.vue'
+import JobSearchForm from '@/components/JobSearch/JobSearchForm.vue'
+
+const useRouterMock = useRouter as Mock
 
 describe('JobSearchForm', () => {
   describe('когда пользователь отправляет данные формы', () => {
     it('направляет пользователя на страницу результатов поиска с параметрами поиска пользователя', async () => {
       const push = vi.fn()
-      useRouter.mockReturnValue({ push })
+      useRouterMock.mockReturnValue({ push })
 
-      render(JobsearchForm, {
+      render(JobSearchForm, {
         global: {
           stubs: {
             FormAwesomeIcon: true
