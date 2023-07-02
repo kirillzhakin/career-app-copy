@@ -97,13 +97,36 @@ describe('getters', () => {
         expect(result).toBe(true)
       })
     })
-    it('фильтрует вакансии в соответствии с выбором пользователя', () => {
+    it('фильтрует вакансии в соответствии с выбором пользователя формата работы', () => {
       const userStore = useUserStore()
       userStore.selectedJobTypes = ['Full-time', 'Path-time']
       const jobStore = useJobsStore()
       const job = createJob({ jobType: 'Path-time' })
 
       const result = jobStore.INCLUDE_JOB_BY_JOB_TYPE(job)
+      expect(result).toBe(true)
+    })
+  })
+
+  describe('INCLUDE_JOB_BY_Degree', () => {
+    describe('пользователь не выбрал степень', () => {
+      it('сравнивает вакансии', () => {
+        const userStore = useUserStore()
+        userStore.selectedDegrees = []
+        const jobStore = useJobsStore()
+        const job = createJob()
+
+        const result = jobStore.INCLUDE_JOB_BY_DEGREE(job)
+        expect(result).toBe(true)
+      })
+    })
+    it('фильтрует вакансии в соответствии с выбором пользователя степени', () => {
+      const userStore = useUserStore()
+      userStore.selectedDegrees = ["Master's"]
+      const jobStore = useJobsStore()
+      const job = createJob({ degree: "Master's" })
+
+      const result = jobStore.INCLUDE_JOB_BY_DEGREE(job)
       expect(result).toBe(true)
     })
   })

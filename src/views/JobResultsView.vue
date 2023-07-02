@@ -1,7 +1,7 @@
 <template>
   <div class="flex w-full flex-row flex-nowrap">
-    <job-filters-sidebar></job-filters-sidebar>
-    <job-listings></job-listings>
+    <job-filters-sidebar />
+    <job-listings />
   </div>
 </template>
 

@@ -20,6 +20,10 @@ describe('state', () => {
     const store = useUserStore()
     expect(store.selectedJobTypes).toEqual([])
   })
+  it('пользователь фильтрует вакансии по степени', () => {
+    const store = useUserStore()
+    expect(store.selectedDegrees).toEqual([])
+  })
 })
 
 describe('actions', () => {
@@ -46,6 +50,13 @@ describe('actions', () => {
       const store = useUserStore()
       store.ADD_SELECTED_JOB_TYPES(['Full-time', 'Part-time'])
       expect(store.selectedJobTypes).toEqual(['Full-time', 'Part-time'])
+    })
+  })
+  describe('ADD_SELECTED_DEGREES', () => {
+    it('пользователь получает отфильтрованные вакансии по степени', () => {
+      const store = useUserStore()
+      store.ADD_SELECTED_DEGREES(["Bachelor's", "Master's"])
+      expect(store.selectedDegrees).toEqual(["Bachelor's", "Master's"])
     })
   })
 })

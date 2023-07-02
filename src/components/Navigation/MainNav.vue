@@ -46,10 +46,10 @@ const menuItems = ref([
   { text: 'Jobs', url: '/jobs/results' }
 ])
 
-const headerHeightClass = () => {
+const headerHeightClass = computed(() => {
   return {
     'h-16': !isLoggedIn.value,
     'h-32': isLoggedIn.value
   }
-}
+})
 </script>
