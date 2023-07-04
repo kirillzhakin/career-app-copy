@@ -130,4 +130,38 @@ describe('getters', () => {
       expect(result).toBe(true)
     })
   })
+
+  describe('INCLUDE_JOB_BY_SKILL', () => {
+    it('определяет, соответствует ли работа навыкам пользователя', () => {
+      const userStore = useUserStore()
+      userStore.skillsSearchTerm = 'Vue'
+      const store = useJobsStore()
+      const job = createJob({ title: 'Vue Developer' })
+
+      const result = store.INCLUDE_JOB_BY_SKILL(job)
+      expect(result).toBe(true)
+    })
+
+    it('обрабатывает несовместимый регистр символов', () => {
+      const userStore = useUserStore()
+      userStore.skillsSearchTerm = 'vuE'
+      const store = useJobsStore()
+      const job = createJob({ title: 'Vue Developer' })
+
+      const result = store.INCLUDE_JOB_BY_SKILL(job)
+      expect(result).toBe(true)
+    })
+
+    describe('когда пользователь не ввел ни одного навыка', () => {
+      it('сравнивает вакансии', () => {
+        const userStore = useUserStore()
+        userStore.skillsSearchTerm = ''
+        const store = useJobsStore()
+        const job = createJob({ title: 'Vue Developer' })
+
+        const result = store.INCLUDE_JOB_BY_SKILL(job)
+        expect(result).toBe(true)
+      })
+    })
+  })
 })

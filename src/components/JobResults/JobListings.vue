@@ -3,8 +3,12 @@
     <ol>
       <job-listing v-for="job in displayedJobs" :key="job.id" :job="job" />
     </ol>
+    <div v-if="FILTERED_JOBS.length === 0" class="mx-auto">
+      <h2 class="text-2xl">No results</h2>
+      <p class="mt-3 text-sm">Search again or try updating your filters</p>
+    </div>
 
-    <div class="mx-auto mt-8">
+    <div v-else class="mx-auto mt-8">
       <div class="flex flex-row flex-nowrap">
         <p class="flex-grow text-sm">Page {{ currentPage }}</p>
 

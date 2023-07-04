@@ -56,7 +56,7 @@ describe('MainNav', () => {
       const userStore = useUserStore()
 
       let profileImage = screen.queryByRole('img', {
-        name: /user image/i
+        name: /user profile image/i
       })
       expect(profileImage).not.toBeInTheDocument()
 
@@ -66,10 +66,10 @@ describe('MainNav', () => {
       userStore.isLoggedIn = true
       await userEvent.click(loginButton)
 
-      //   profileImage = screen.getByRole('img', {
-      //     name: /^user image$/i
-      //   })
-      //   expect(profileImage).toBeInTheDocument()
+      // profileImage = screen.getByRole('img', {
+      //   name: /user profile image/i
+      // })
+      // expect(profileImage).toBeInTheDocument()
     })
   })
 })
