@@ -66,10 +66,8 @@ describe('MainNav', () => {
       userStore.isLoggedIn = true
       await userEvent.click(loginButton)
 
-      // profileImage = screen.getByRole('img', {
-      //   name: /user profile image/i
-      // })
-      // expect(profileImage).toBeInTheDocument()
+      profileImage = await screen.findByAltText(/user profile image/i)
+      expect(profileImage).toBeInTheDocument()
     })
   })
 })

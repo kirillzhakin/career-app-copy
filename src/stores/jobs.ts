@@ -23,6 +23,7 @@ export const useJobsStore = defineStore('jobs', {
   }),
   actions: {
     async [FETCH_JOBS]() {
+      // const { jobs } = await getJobs()
       this.jobs = await getJobs()
     }
   },
